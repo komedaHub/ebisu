@@ -3,11 +3,32 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <!--<script th:src="@{/webjars/vue/2.5.3-1/vue.js}"></script>-->
+    <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <title>Sample</title>
 </head>
 
 <body>
     <h1>HelloWorld2</h1>
+    <p class="text-primary">aaa</p>
+    <div id="app">
+        <p>MSG：{{ message }}</p>
+        <transition>
+            <p v-if="errShow">ERRMSG：{{ errMessage }}</p>
+        </transition>
+        <p>税込：{{ count * 1.1 }}</p>
+        <ol>
+            <li v-for="item in list">{{ item }}</li>
+        </ol>
+        <input v-model="message">
+        <input v-model.number="count">
+        <button v-on:click="handleClick">アラート表示</button>
+        <button v-on:click="errShow=!errShow">エラー表示</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script th:src="@{/js/main.js}"></script>
 </body>
 
 </html>
