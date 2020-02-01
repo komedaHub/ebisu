@@ -14,6 +14,10 @@
     <h1>HelloWorld2</h1>
     <p class="text-primary">aaa</p>
     <div id="app">
+        <div v-bind:text-content.prop="message"></div>
+        <div v-bind:scroll-top.prop="scroll"></div>
+        <p v-bind:class="{ info: isInfo }">classの切り替えてすとtext</p>
+        <p v-bind:style="{ color: textColor }">styleの切り替えてすとtext</p>
         <p>MSG：{{ message }}</p>
         <transition>
             <p v-if="errShow">ERRMSG：{{ errMessage }}</p>
@@ -22,12 +26,46 @@
         <ol>
             <li v-for="item in list">{{ item }}</li>
         </ol>
-        <input v-model="message">
+        名前：<input v-model="name">
+        <button v-on:click="doAdd">モンスターを追加</button>
+        <ul>
+            <li v-for="monster in monsterList" v-bind:key="monster.id" v-bind:class="{ info: monster.hp >= 200}">
+                {{ monster.id }}@{{ monster.name }}@{{ monster.hp }}<button v-on:click="doRemove">削除</button>
+            </li>
+        </ul>
+        <p><input v-model="message"></p>
+        <p>メモ欄<textarea v-model="memo" cols="30" rows="10"></textarea></p>
+        <p><label><input type="checkbox" v-model="flag">あいうえお順</label></p>
+        <p>
+            <label><input type="radio" v-model="sex" value="1">男性</label>
+            <label><input type="radio" v-model="sex" value="2">女性</label>
+        </p>
+        <p>
+            <label><input type="checkbox" v-model="hobby" value="01">ビール</label>
+            <label><input type="checkbox" v-model="hobby" value="02">ワイン</label>
+            <label><input type="checkbox" v-model="hobby" value="03">焼酎</label>
+            <label><input type="checkbox" v-model="hobby" value="04">日本酒</label>
+            <label><input type="checkbox" v-model="hobby" value="05">ウィスキー</label>
+            <label><input type="checkbox" v-model="hobby" value="06">カクテル</label>
+        </p>
+        <p>戦闘力：0<input type="range" min="0" max="530000" v-model.number="power">530000</p>
+        <p>カラー：<input type="color" v-model="colorVal">{{ colorVal }}</p>
+        <p>{{ power }}</p>
+        <input v-bind:value="message" v-on:input="checkMsg">
         <input v-model.number="count">
         <button v-on:click="handleClick">アラート表示</button>
         <button v-on:click="errShow=!errShow">エラー表示</button>
+        <button v-on:click="increment">カウントを増やす</button>
+        <template v-if="areaShow">
+            <svg xmlns="http://www.ws.org/2000/svg" version="1.1">
+                <circle cx="100" cy="75" v-bind:r="radius" fill="aqua" />
+            </svg>
+            <input type="range" min="0" max="100" v-model="radius">    
+        </template>
+        <pre>{{ $data }}</pre>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script th:src="@{/js/main.js}"></script>
 </body>
 

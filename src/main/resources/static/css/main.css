@@ -4,3 +4,6 @@
 .v-enter, .v-leave-to {
     opacity: 0;
 }
+.info {
+    background-color: aqua;
+}
