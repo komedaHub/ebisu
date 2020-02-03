@@ -22,14 +22,26 @@
         <transition>
             <p v-if="errShow">ERRMSG：{{ errMessage }}</p>
         </transition>
+        <select v-model="current">
+            <option v-for="topic in topics" v-bind:value="topic.value">
+                {{ topic.name }}
+            </option>
+        </select>
+        <div v-for="item in gitList">{{ item.full_name }}</div>
+        <hr>
         <p>税込：{{ count * 1.1 }}</p>
         <ol>
             <li v-for="item in list">{{ item }}</li>
         </ol>
         名前：<input v-model="name">
+        <p>本体価格：<input v-model="price">税込価格：{{ includeTaxPrice | localNum }}円</p>
         <button v-on:click="doAdd">モンスターを追加</button>
+        <button v-on:click="order=!order">ソート順切り替え</button>
+        HP絞り込み：<input v-model.number="filterHp">
+        件数：<input v-model.number="limit">
+        <p>{{ matched.length }}件中、{{ limited.length }}件を表示</p>
         <ul>
-            <li v-for="monster in monsterList" v-bind:key="monster.id" v-bind:class="{ info: monster.hp >= 200}">
+            <li v-for="monster in sorted" v-bind:key="monster.id" v-bind:class="{ info: monster.hp >= 200}">
                 {{ monster.id }}@{{ monster.name }}@{{ monster.hp }}<button v-on:click="doRemove">削除</button>
             </li>
         </ul>
@@ -64,6 +76,7 @@
         </template>
         <pre>{{ $data }}</pre>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script th:src="@{/js/main.js}"></script>
