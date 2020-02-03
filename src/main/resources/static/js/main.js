@@ -38,6 +38,8 @@ var app = new Vue({
         errShow: false,
         errMessage: 'ERRRRR!!!!!',
         count: 1,
+        price: 100,
+        filterHp: 999,
         flag: true,
         memo: '',
         power: 5,
@@ -53,13 +55,56 @@ var app = new Vue({
         lastName: '',
         firstName: '',
         sex: '',
-        email: ''
+        email: '',
+        limit: 10,
+        order: false,
+        current: '',
+        topics: [
+            { value: 'vue', name: 'Vue.js' },
+            { value: 'jQuery', name: 'jQuery' },
+        ],
+        gitList: []
+    },
+    filters: {
+        localNum :function(val) {
+            return val.toLocaleString()
+        }
+
+    },
+    watch: {
+        price: function(newVal, oldVal) {
+            this.message = '税込価格が更新されました。'
+        },
+        'monsterList': {
+            handler: function(newVal, oldVal) {
+                this.message = 'モンスターリストが更新されました。'
+            },
+            deep: true
+        },
+        current: function(val) {
+            axios.get('https://api.github.com/search/repositories', {
+                params: { q: 'topic:' + val }
+            }).then(function(response) {
+                this.gitList = response.data.items
+            }.bind(this))
+        }
+    },
+    computed: {
+        includeTaxPrice: function() {
+            return this.price * 1.08
+        },
+        matched: function() {
+            return this.monsterList.filter(function(el) {
+                return el.hp <= this.filterHp
+            }, this)
+        },
+        sorted: function() {
+            return _.orderBy(this.matched, 'hp', this.order ? 'desc' : 'asc')
+        },
+        limited: function() {
+            return this.matched.slice(0, this.limit)
+        }
     },
     created: function() {
-        axios.get("./list.json").then(function(response) {
-            this.list = response.data
-        }.bind(this)).catch(function(e) {
-            console.error(e)
-        })
     }
 })
