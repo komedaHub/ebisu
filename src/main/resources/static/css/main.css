@@ -7,3 +7,9 @@
 .info {
     background-color: aqua;
 }
+.error {
+    color: red;
+}
+.errorArea {
+    background: rgb(199, 83, 83);
+}

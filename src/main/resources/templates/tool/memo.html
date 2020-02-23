@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <title>Memo</title>
+</head>
+
+<body>
+    <h1>Memo</h1>
+    <div id="memoApp">
+        <p class="error">{{ errorMessage }}</p>
+        <p><textarea v-model="memo" cols="30" rows="10" v-bind:class="{ errorArea: hasError }"></textarea></p>
+        <p v-bind:class="{ error: hasError }">現在{{ memoCharCount }}文字／最大100文字</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/memo.js}"></script>
+</body>
+
+</html>
