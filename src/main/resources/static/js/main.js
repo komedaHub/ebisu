@@ -1,5 +1,16 @@
+// グローバル
+Vue.component('global_component', {
+    template : '<p>global component</p>'
+})
+// ローカル
+var localComponent = {
+    template: '<p>localcomponent</p>'
+}
 var app = new Vue({
     el: '#app',
+    components: {
+        'local-component': localComponent
+    },
     methods: {
         handleClick: function(event) {
             alert(event.target)
